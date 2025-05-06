@@ -1,0 +1,2041 @@
+openapi: 3.0.4
+info:
+  title: TTX.Api
+  version: "1.0"
+servers:
+- url: /
+paths:
+  /creators:
+    get:
+      operationId: GetCreators
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          $ref: '#/components/schemas/CreatorOrderBy'
+        style: form
+      - explode: true
+        in: query
+        name: orderDir
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderDirection'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatorPartialDtoPaginationDto'
+          description: OK
+      tags:
+      - TTX
+    post:
+      operationId: CreateCreator
+      parameters:
+      - explode: true
+        in: query
+        name: username
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ticker
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatorDto'
+          description: OK
+      tags:
+      - TTX
+  /creators/{slug}:
+    get:
+      operationId: GetCreator
+      parameters:
+      - explode: false
+        in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: step
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimeStep'
+        style: form
+      - explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatorDto'
+          description: OK
+      tags:
+      - TTX
+  /creators/{creatorSlug}/transactions:
+    get:
+      operationId: GetCreatorTransactions
+      parameters:
+      - explode: true
+        in: query
+        name: slug
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: creatorSlug
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PlayerTransactionDto'
+                type: array
+          description: OK
+      tags:
+      - TTX
+  /players:
+    get:
+      operationId: GetPlayers
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          $ref: '#/components/schemas/PlayerOrderBy'
+        style: form
+      - explode: true
+        in: query
+        name: orderDir
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderDirection'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerDtoPaginationDto'
+          description: OK
+      tags:
+      - TTX
+  /players/{username}:
+    get:
+      operationId: GetPlayer
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: step
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimeStep'
+        style: form
+      - explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerDto'
+          description: OK
+      tags:
+      - TTX
+  /players/me:
+    get:
+      operationId: GetSelf
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerDto'
+          description: OK
+      tags:
+      - TTX
+  /players/me/lootboxes/{lootBoxId}/open:
+    put:
+      operationId: Gamba
+      parameters:
+      - explode: false
+        in: path
+        name: lootBoxId
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LootBoxResultDto'
+          description: OK
+      tags:
+      - TTX
+  /sessions/twitch/callback:
+    get:
+      operationId: TwitchCallback
+      parameters:
+      - explode: true
+        in: query
+        name: code
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+          description: OK
+      tags:
+      - TTX
+  /sessions/discord/callback:
+    get:
+      operationId: DiscordCallback
+      parameters:
+      - explode: true
+        in: query
+        name: code
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DiscordTokenDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscordTokenDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DiscordTokenDto'
+          description: OK
+      tags:
+      - TTX
+  /sessions/discord/link:
+    post:
+      operationId: LinkDiscordTwitch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkDiscordTwitchDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LinkDiscordTwitchDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LinkDiscordTwitchDto'
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+          description: OK
+      tags:
+      - TTX
+  /transactions:
+    post:
+      operationId: PlaceOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionDto'
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreatorTransactionDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatorTransactionDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreatorTransactionDto'
+          description: OK
+      tags:
+      - TTX
+components:
+  schemas:
+    CreateTransactionDto:
+      additionalProperties: false
+      example:
+        creator: creator
+        amount: 0
+        action: Buy
+      properties:
+        creator:
+          type: string
+        action:
+          $ref: '#/components/schemas/TransactionAction'
+        amount:
+          format: int32
+          type: integer
+      required:
+      - action
+      - amount
+      - creator
+      type: object
+    CreatorDto:
+      additionalProperties: false
+      example:
+        ticker: ticker
+        created_at: 2000-01-23T04:56:07.000+00:00
+        stream_status:
+          is_live: true
+          started_at: 2000-01-23T04:56:07.000+00:00
+          ended_at: 2000-01-23T04:56:07.000+00:00
+        history:
+        - creator_id: 1
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 5
+        - creator_id: 1
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 5
+        transactions:
+        - quantity: 5
+          player_id: 7
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          creator_id: 2
+          created_at: 2000-01-23T04:56:07.000+00:00
+          action: Buy
+          id: 1
+          value: 5
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        - quantity: 5
+          player_id: 7
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          creator_id: 2
+          created_at: 2000-01-23T04:56:07.000+00:00
+          action: Buy
+          id: 1
+          value: 5
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        url: url
+        shares:
+        - quantity: 7
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        - quantity: 7
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        avatar_url: avatar_url
+        twitch_id: twitch_id
+        name: name
+        id: 0
+        value: 6
+        slug: slug
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        twitch_id:
+          type: string
+        url:
+          readOnly: true
+          type: string
+        avatar_url:
+          type: string
+        ticker:
+          type: string
+        value:
+          format: int64
+          type: integer
+        stream_status:
+          $ref: '#/components/schemas/StreamStatusDto'
+        history:
+          items:
+            $ref: '#/components/schemas/VoteDto'
+          type: array
+        transactions:
+          items:
+            $ref: '#/components/schemas/CreatorTransactionDto'
+          type: array
+        shares:
+          items:
+            $ref: '#/components/schemas/CreatorShareDto'
+          type: array
+      required:
+      - avatar_url
+      - created_at
+      - history
+      - id
+      - name
+      - shares
+      - slug
+      - stream_status
+      - ticker
+      - transactions
+      - twitch_id
+      - updated_at
+      - url
+      - value
+      type: object
+    CreatorOrderBy:
+      enum:
+      - Name
+      - Value
+      - IsLive
+      type: string
+    CreatorPartialDto:
+      additionalProperties: false
+      example:
+        ticker: ticker
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        avatar_url: avatar_url
+        twitch_id: twitch_id
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        stream_status:
+          is_live: true
+          started_at: 2000-01-23T04:56:07.000+00:00
+          ended_at: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        history:
+        - creator_id: 1
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 5
+        - creator_id: 1
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 5
+        value: 6
+        slug: slug
+        url: url
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        twitch_id:
+          type: string
+        url:
+          readOnly: true
+          type: string
+        avatar_url:
+          type: string
+        ticker:
+          type: string
+        value:
+          format: int64
+          type: integer
+        stream_status:
+          $ref: '#/components/schemas/StreamStatusDto'
+        history:
+          items:
+            $ref: '#/components/schemas/VoteDto'
+          type: array
+      required:
+      - avatar_url
+      - created_at
+      - history
+      - id
+      - name
+      - slug
+      - stream_status
+      - ticker
+      - twitch_id
+      - updated_at
+      - url
+      - value
+      type: object
+    CreatorPartialDtoPaginationDto:
+      additionalProperties: false
+      example:
+        total: 5
+        data:
+        - ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+        - ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CreatorPartialDto'
+          type: array
+        total:
+          format: int32
+          type: integer
+      required:
+      - data
+      - total
+      type: object
+    CreatorRarityDto:
+      additionalProperties: false
+      example:
+        creator:
+          ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+        rarity: Pennies
+      properties:
+        creator:
+          $ref: '#/components/schemas/CreatorPartialDto'
+        rarity:
+          $ref: '#/components/schemas/Rarity'
+      required:
+      - creator
+      - rarity
+      type: object
+    CreatorShareDto:
+      additionalProperties: false
+      example:
+        quantity: 7
+        player:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 3
+          portfolio: 2
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 9
+          type: User
+          value: 4
+          slug: slug
+          url: url
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerPartialDto'
+        quantity:
+          format: int32
+          type: integer
+      required:
+      - player
+      - quantity
+      type: object
+    CreatorTransactionDto:
+      additionalProperties: false
+      example:
+        quantity: 5
+        player_id: 7
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        creator_id: 2
+        created_at: 2000-01-23T04:56:07.000+00:00
+        action: Buy
+        id: 1
+        value: 5
+        player:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 3
+          portfolio: 2
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 9
+          type: User
+          value: 4
+          slug: slug
+          url: url
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        quantity:
+          format: int32
+          type: integer
+        value:
+          format: int64
+          type: integer
+        action:
+          $ref: '#/components/schemas/TransactionAction'
+        creator_id:
+          format: int32
+          type: integer
+        player_id:
+          format: int32
+          type: integer
+        player:
+          $ref: '#/components/schemas/PlayerPartialDto'
+      required:
+      - action
+      - created_at
+      - creator_id
+      - id
+      - player
+      - player_id
+      - quantity
+      - updated_at
+      - value
+      type: object
+    DiscordTokenDto:
+      additionalProperties: false
+      example:
+        access_token: access_token
+        twitch_users:
+        - avatar_url: avatar_url
+          id: id
+          display_name: display_name
+          login: login
+        - avatar_url: avatar_url
+          id: id
+          display_name: display_name
+          login: login
+        link_token: link_token
+      properties:
+        access_token:
+          type: string
+        link_token:
+          type: string
+        twitch_users:
+          items:
+            $ref: '#/components/schemas/TwitchUserDto'
+          readOnly: true
+          type: array
+      required:
+      - access_token
+      - link_token
+      - twitch_users
+      type: object
+    LinkDiscordTwitchDto:
+      additionalProperties: false
+      example:
+        access_token: access_token
+        twitch_id: twitch_id
+      properties:
+        access_token:
+          type: string
+        twitch_id:
+          type: string
+      required:
+      - access_token
+      - twitch_id
+      type: object
+    LootBoxDto:
+      additionalProperties: false
+      example:
+        result:
+          ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        is_open: true
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: 5
+        player:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 3
+          portfolio: 2
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 9
+          type: User
+          value: 4
+          slug: slug
+          url: url
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        is_open:
+          type: boolean
+        result:
+          $ref: '#/components/schemas/CreatorPartialDto'
+        player:
+          $ref: '#/components/schemas/PlayerPartialDto'
+      required:
+      - created_at
+      - id
+      - is_open
+      - player
+      - result
+      - updated_at
+      type: object
+    LootBoxResultDto:
+      additionalProperties: false
+      example:
+        result:
+          creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          rarity: Pennies
+        rarities:
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          rarity: Pennies
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          rarity: Pennies
+        lootbox_id:
+          value: 0
+        player:
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 3
+          portfolio: 2
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 9
+          type: User
+          value: 4
+          slug: slug
+          url: url
+      properties:
+        lootbox_id:
+          $ref: '#/components/schemas/ModelId'
+        player:
+          $ref: '#/components/schemas/PlayerPartialDto'
+        result:
+          $ref: '#/components/schemas/CreatorRarityDto'
+        rarities:
+          items:
+            $ref: '#/components/schemas/CreatorRarityDto'
+          type: array
+      required:
+      - lootbox_id
+      - player
+      - rarities
+      - result
+      type: object
+    ModelId:
+      additionalProperties: false
+      example:
+        value: 0
+      properties:
+        value:
+          format: int32
+          type: integer
+      required:
+      - value
+      type: object
+    OrderDirection:
+      enum:
+      - Ascending
+      - Descending
+      type: string
+    PlayerDto:
+      additionalProperties: false
+      example:
+        created_at: 2000-01-23T04:56:07.000+00:00
+        history:
+        - player_id: 7
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 9
+        - player_id: 7
+          time: 2000-01-23T04:56:07.000+00:00
+          value: 9
+        type: User
+        transactions:
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          quantity: 6
+          player_id: 5
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          creator_id: 5
+          created_at: 2000-01-23T04:56:07.000+00:00
+          action: Buy
+          id: 0
+          value: 1
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          quantity: 6
+          player_id: 5
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          creator_id: 5
+          created_at: 2000-01-23T04:56:07.000+00:00
+          action: Buy
+          id: 0
+          value: 1
+        url: url
+        loot_boxes:
+        - result:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          is_open: true
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        - result:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          is_open: true
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          player:
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            credits: 3
+            portfolio: 2
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 9
+            type: User
+            value: 4
+            slug: slug
+            url: url
+        shares:
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          quantity: 2
+        - creator:
+            ticker: ticker
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            avatar_url: avatar_url
+            twitch_id: twitch_id
+            name: name
+            created_at: 2000-01-23T04:56:07.000+00:00
+            stream_status:
+              is_live: true
+              started_at: 2000-01-23T04:56:07.000+00:00
+              ended_at: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            history:
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            - creator_id: 1
+              time: 2000-01-23T04:56:07.000+00:00
+              value: 5
+            value: 6
+            slug: slug
+            url: url
+          quantity: 2
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        avatar_url: avatar_url
+        twitch_id: twitch_id
+        credits: 6
+        portfolio: 1
+        name: name
+        id: 0
+        value: 5
+        slug: slug
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        twitch_id:
+          type: string
+        url:
+          readOnly: true
+          type: string
+        avatar_url:
+          type: string
+        credits:
+          format: int64
+          type: integer
+        portfolio:
+          format: int64
+          type: integer
+        value:
+          format: int64
+          type: integer
+        type:
+          $ref: '#/components/schemas/PlayerType'
+        transactions:
+          items:
+            $ref: '#/components/schemas/PlayerTransactionDto'
+          type: array
+        loot_boxes:
+          items:
+            $ref: '#/components/schemas/LootBoxDto'
+          type: array
+        shares:
+          items:
+            $ref: '#/components/schemas/PlayerShareDto'
+          type: array
+        history:
+          items:
+            $ref: '#/components/schemas/PortfolioSnapshotDto'
+          type: array
+      required:
+      - avatar_url
+      - created_at
+      - credits
+      - history
+      - id
+      - loot_boxes
+      - name
+      - portfolio
+      - shares
+      - slug
+      - transactions
+      - twitch_id
+      - type
+      - updated_at
+      - url
+      - value
+      type: object
+    PlayerDtoPaginationDto:
+      additionalProperties: false
+      example:
+        total: 3
+        data:
+        - created_at: 2000-01-23T04:56:07.000+00:00
+          history:
+          - player_id: 7
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 9
+          - player_id: 7
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 9
+          type: User
+          transactions:
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 6
+            player_id: 5
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            creator_id: 5
+            created_at: 2000-01-23T04:56:07.000+00:00
+            action: Buy
+            id: 0
+            value: 1
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 6
+            player_id: 5
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            creator_id: 5
+            created_at: 2000-01-23T04:56:07.000+00:00
+            action: Buy
+            id: 0
+            value: 1
+          url: url
+          loot_boxes:
+          - result:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_open: true
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            player:
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              credits: 3
+              portfolio: 2
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              id: 9
+              type: User
+              value: 4
+              slug: slug
+              url: url
+          - result:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_open: true
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            player:
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              credits: 3
+              portfolio: 2
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              id: 9
+              type: User
+              value: 4
+              slug: slug
+              url: url
+          shares:
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 2
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 2
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 6
+          portfolio: 1
+          name: name
+          id: 0
+          value: 5
+          slug: slug
+        - created_at: 2000-01-23T04:56:07.000+00:00
+          history:
+          - player_id: 7
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 9
+          - player_id: 7
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 9
+          type: User
+          transactions:
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 6
+            player_id: 5
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            creator_id: 5
+            created_at: 2000-01-23T04:56:07.000+00:00
+            action: Buy
+            id: 0
+            value: 1
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 6
+            player_id: 5
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            creator_id: 5
+            created_at: 2000-01-23T04:56:07.000+00:00
+            action: Buy
+            id: 0
+            value: 1
+          url: url
+          loot_boxes:
+          - result:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_open: true
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            player:
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              credits: 3
+              portfolio: 2
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              id: 9
+              type: User
+              value: 4
+              slug: slug
+              url: url
+          - result:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_open: true
+            created_at: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            player:
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              credits: 3
+              portfolio: 2
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              id: 9
+              type: User
+              value: 4
+              slug: slug
+              url: url
+          shares:
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 2
+          - creator:
+              ticker: ticker
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              avatar_url: avatar_url
+              twitch_id: twitch_id
+              name: name
+              created_at: 2000-01-23T04:56:07.000+00:00
+              stream_status:
+                is_live: true
+                started_at: 2000-01-23T04:56:07.000+00:00
+                ended_at: 2000-01-23T04:56:07.000+00:00
+              id: 0
+              history:
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              - creator_id: 1
+                time: 2000-01-23T04:56:07.000+00:00
+                value: 5
+              value: 6
+              slug: slug
+              url: url
+            quantity: 2
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          credits: 6
+          portfolio: 1
+          name: name
+          id: 0
+          value: 5
+          slug: slug
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PlayerDto'
+          type: array
+        total:
+          format: int32
+          type: integer
+      required:
+      - data
+      - total
+      type: object
+    PlayerOrderBy:
+      enum:
+      - Name
+      - Credits
+      - Portfolio
+      type: string
+    PlayerPartialDto:
+      additionalProperties: false
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        avatar_url: avatar_url
+        twitch_id: twitch_id
+        credits: 3
+        portfolio: 2
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: 9
+        type: User
+        value: 4
+        slug: slug
+        url: url
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        twitch_id:
+          type: string
+        url:
+          readOnly: true
+          type: string
+        avatar_url:
+          type: string
+        credits:
+          format: int64
+          type: integer
+        portfolio:
+          format: int64
+          type: integer
+        value:
+          format: int64
+          type: integer
+        type:
+          $ref: '#/components/schemas/PlayerType'
+      required:
+      - avatar_url
+      - created_at
+      - credits
+      - id
+      - name
+      - portfolio
+      - slug
+      - twitch_id
+      - type
+      - updated_at
+      - url
+      - value
+      type: object
+    PlayerShareDto:
+      additionalProperties: false
+      example:
+        creator:
+          ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+        quantity: 2
+      properties:
+        creator:
+          $ref: '#/components/schemas/CreatorPartialDto'
+        quantity:
+          format: int32
+          type: integer
+      required:
+      - creator
+      - quantity
+      type: object
+    PlayerTransactionDto:
+      additionalProperties: false
+      example:
+        creator:
+          ticker: ticker
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          avatar_url: avatar_url
+          twitch_id: twitch_id
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_status:
+            is_live: true
+            started_at: 2000-01-23T04:56:07.000+00:00
+            ended_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          history:
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          - creator_id: 1
+            time: 2000-01-23T04:56:07.000+00:00
+            value: 5
+          value: 6
+          slug: slug
+          url: url
+        quantity: 6
+        player_id: 5
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        creator_id: 5
+        created_at: 2000-01-23T04:56:07.000+00:00
+        action: Buy
+        id: 0
+        value: 1
+      properties:
+        id:
+          format: int32
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        quantity:
+          format: int32
+          type: integer
+        value:
+          format: int64
+          type: integer
+        action:
+          $ref: '#/components/schemas/TransactionAction'
+        creator_id:
+          format: int32
+          type: integer
+        player_id:
+          format: int32
+          type: integer
+        creator:
+          $ref: '#/components/schemas/CreatorPartialDto'
+      required:
+      - action
+      - created_at
+      - creator
+      - creator_id
+      - id
+      - player_id
+      - quantity
+      - updated_at
+      - value
+      type: object
+    PlayerType:
+      enum:
+      - User
+      - Admin
+      type: string
+    PortfolioSnapshotDto:
+      additionalProperties: false
+      example:
+        player_id: 7
+        time: 2000-01-23T04:56:07.000+00:00
+        value: 9
+      properties:
+        player_id:
+          format: int32
+          type: integer
+        value:
+          format: int64
+          type: integer
+        time:
+          format: date-time
+          type: string
+      required:
+      - player_id
+      - time
+      - value
+      type: object
+    Rarity:
+      enum:
+      - Pennies
+      - Common
+      - Rare
+      - Epic
+      type: string
+    StreamStatusDto:
+      additionalProperties: false
+      example:
+        is_live: true
+        started_at: 2000-01-23T04:56:07.000+00:00
+        ended_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        is_live:
+          type: boolean
+        started_at:
+          format: date-time
+          nullable: true
+          type: string
+        ended_at:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - is_live
+      type: object
+    TimeStep:
+      enum:
+      - Minute
+      - FiveMinute
+      - FifteenMinute
+      - ThirtyMinute
+      - Hour
+      - Day
+      - Week
+      - Month
+      type: string
+    TokenDto:
+      additionalProperties: false
+      example:
+        access_token: access_token
+      properties:
+        access_token:
+          type: string
+      required:
+      - access_token
+      type: object
+    TransactionAction:
+      enum:
+      - Buy
+      - Sell
+      - Open
+      type: string
+    TwitchUserDto:
+      additionalProperties: false
+      example:
+        avatar_url: avatar_url
+        id: id
+        display_name: display_name
+        login: login
+      properties:
+        id:
+          type: string
+        display_name:
+          type: string
+        login:
+          type: string
+        avatar_url:
+          type: string
+      required:
+      - avatar_url
+      - display_name
+      - id
+      - login
+      type: object
+    VoteDto:
+      additionalProperties: false
+      example:
+        creator_id: 1
+        time: 2000-01-23T04:56:07.000+00:00
+        value: 5
+      properties:
+        creator_id:
+          format: int32
+          type: integer
+        value:
+          format: int64
+          type: integer
+        time:
+          format: date-time
+          type: string
+      required:
+      - creator_id
+      - time
+      - value
+      type: object
