@@ -139,6 +139,4 @@ Each of these functions takes a value of the given basic type and returns a poin
 * `PtrTime`
 
 ## Author
-
-
-
+[NathanRoberts55](https://github.com/nathanroberts55)
