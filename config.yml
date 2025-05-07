@@ -7,5 +7,6 @@ projectName: go-ttx
 gitHost: github.com
 gitUserId: ttxdev
 gitRepoId: go-ttx
+enumClassPrefix: true
 openapiNormalizer:
   SET_TAGS_FOR_ALL_OPERATIONS: TTX

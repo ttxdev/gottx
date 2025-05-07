@@ -20,9 +20,9 @@ type TransactionAction string
 
 // List of TransactionAction
 const (
-	BUY TransactionAction = "Buy"
-	SELL TransactionAction = "Sell"
-	OPEN TransactionAction = "Open"
+	TRANSACTIONACTION_BUY TransactionAction = "Buy"
+	TRANSACTIONACTION_SELL TransactionAction = "Sell"
+	TRANSACTIONACTION_OPEN TransactionAction = "Open"
 )
 
 // All allowed values of TransactionAction enum

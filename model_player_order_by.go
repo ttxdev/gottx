@@ -20,9 +20,9 @@ type PlayerOrderBy string
 
 // List of PlayerOrderBy
 const (
-	NAME PlayerOrderBy = "Name"
-	CREDITS PlayerOrderBy = "Credits"
-	PORTFOLIO PlayerOrderBy = "Portfolio"
+	PLAYERORDERBY_NAME PlayerOrderBy = "Name"
+	PLAYERORDERBY_CREDITS PlayerOrderBy = "Credits"
+	PLAYERORDERBY_PORTFOLIO PlayerOrderBy = "Portfolio"
 )
 
 // All allowed values of PlayerOrderBy enum

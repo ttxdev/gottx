@@ -20,9 +20,9 @@ type CreatorOrderBy string
 
 // List of CreatorOrderBy
 const (
-	NAME CreatorOrderBy = "Name"
-	VALUE CreatorOrderBy = "Value"
-	IS_LIVE CreatorOrderBy = "IsLive"
+	CREATORORDERBY_NAME CreatorOrderBy = "Name"
+	CREATORORDERBY_VALUE CreatorOrderBy = "Value"
+	CREATORORDERBY_IS_LIVE CreatorOrderBy = "IsLive"
 )
 
 // All allowed values of CreatorOrderBy enum

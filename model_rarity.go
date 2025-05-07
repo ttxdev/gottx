@@ -20,10 +20,10 @@ type Rarity string
 
 // List of Rarity
 const (
-	PENNIES Rarity = "Pennies"
-	COMMON Rarity = "Common"
-	RARE Rarity = "Rare"
-	EPIC Rarity = "Epic"
+	RARITY_PENNIES Rarity = "Pennies"
+	RARITY_COMMON Rarity = "Common"
+	RARITY_RARE Rarity = "Rare"
+	RARITY_EPIC Rarity = "Epic"
 )
 
 // All allowed values of Rarity enum

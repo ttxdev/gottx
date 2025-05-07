@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -69,5 +68,4 @@ model_transaction_action.go
 model_twitch_user_dto.go
 model_vote_dto.go
 response.go
-test/api_ttx_test.go
 utils.go

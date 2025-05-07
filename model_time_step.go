@@ -20,14 +20,14 @@ type TimeStep string
 
 // List of TimeStep
 const (
-	MINUTE TimeStep = "Minute"
-	FIVE_MINUTE TimeStep = "FiveMinute"
-	FIFTEEN_MINUTE TimeStep = "FifteenMinute"
-	THIRTY_MINUTE TimeStep = "ThirtyMinute"
-	HOUR TimeStep = "Hour"
-	DAY TimeStep = "Day"
-	WEEK TimeStep = "Week"
-	MONTH TimeStep = "Month"
+	TIMESTEP_MINUTE TimeStep = "Minute"
+	TIMESTEP_FIVE_MINUTE TimeStep = "FiveMinute"
+	TIMESTEP_FIFTEEN_MINUTE TimeStep = "FifteenMinute"
+	TIMESTEP_THIRTY_MINUTE TimeStep = "ThirtyMinute"
+	TIMESTEP_HOUR TimeStep = "Hour"
+	TIMESTEP_DAY TimeStep = "Day"
+	TIMESTEP_WEEK TimeStep = "Week"
+	TIMESTEP_MONTH TimeStep = "Month"
 )
 
 // All allowed values of TimeStep enum

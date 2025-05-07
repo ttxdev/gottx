@@ -20,8 +20,8 @@ type PlayerType string
 
 // List of PlayerType
 const (
-	USER PlayerType = "User"
-	ADMIN PlayerType = "Admin"
+	PLAYERTYPE_USER PlayerType = "User"
+	PLAYERTYPE_ADMIN PlayerType = "Admin"
 )
 
 // All allowed values of PlayerType enum

@@ -20,8 +20,8 @@ type OrderDirection string
 
 // List of OrderDirection
 const (
-	ASCENDING OrderDirection = "Ascending"
-	DESCENDING OrderDirection = "Descending"
+	ORDERDIRECTION_ASCENDING OrderDirection = "Ascending"
+	ORDERDIRECTION_DESCENDING OrderDirection = "Descending"
 )
 
 // All allowed values of OrderDirection enum
