@@ -3,10 +3,11 @@ inputSpec: https://api.ttx.gg/swagger/v1/swagger.json
 outputDir: .
 packageName: gottx
 packageVersion: 1.0.0
-projectName: go-ttx
+projectName: gottx
 gitHost: github.com
 gitUserId: ttxdev
-gitRepoId: go-ttx
+gitRepoId: gottx
 enumClassPrefix: true
+withGoMod: true
 openapiNormalizer:
   SET_TAGS_FOR_ALL_OPERATIONS: TTX

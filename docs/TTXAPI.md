@@ -34,7 +34,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -100,7 +100,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -164,7 +164,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -233,7 +233,7 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -305,7 +305,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -375,7 +375,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -448,7 +448,7 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -520,7 +520,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -592,7 +592,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -651,7 +651,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -715,7 +715,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
@@ -779,7 +779,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/ttxdev/go-ttx"
+	openapiclient "github.com/ttxdev/gottx"
 )
 
 func main() {
